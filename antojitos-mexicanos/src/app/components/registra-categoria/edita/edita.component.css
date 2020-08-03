@@ -1,0 +1,22 @@
+.register {
+    height: 30%;
+    width: 30%;
+    /* padding: 10%; */
+    position: fixed;
+    margin: 0;
+}
+
+.register-p {
+    width: 80%;
+    margin: 24%;
+}
+
+.todo {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url("/assets/images/3189150.jpg");
+    height: 130%;
+    width: 130%;
+    position: fixed;
+}
