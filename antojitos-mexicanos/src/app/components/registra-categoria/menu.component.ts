@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoriaService } from '../../services/categoria/categoria.service';
-// import { ExportDataService } from 'src/app/services/export-data/export-data.service';
-// import { PdfServiceService } from '../../services/PDF/pdf.service';
+import { ExportDataService } from 'src/app/services/export-data/export-data.service';
+import { PdfServiceService } from '../../services/PDF/pdf.service';
 import Swal from 'sweetalert2';
 
 
@@ -28,9 +28,9 @@ export class MenuComponent implements OnInit {
   arraNewCategorias = [];
   title: string;
   cargando: boolean;
-  constructor(private categoriasService: CategoriaService) {
-    // private categoriasService: CategoriaService, private _PdfService: PdfServiceService, private excelService: ExportDataService
-    this.title = "Reporte de Sectores";
+  constructor(private categoriasService: CategoriaService, private _PdfService: PdfServiceService, private excelService: ExportDataService) {
+
+    this.title = "Reporte de Categorías";
     this.cargando = false;
   }
   ngOnInit(): void {
@@ -44,7 +44,7 @@ export class MenuComponent implements OnInit {
       console.log(nombre);
       Toast.fire({
         icon: 'success',
-        title: `¡El sector:" ${nombre} " se desactivo correctamente!`
+        title: `¡La categoría:" ${nombre} " se desactivo correctamente!`
       });
       this.obtenerCategorias();
     }).catch((err) => {
@@ -56,14 +56,14 @@ export class MenuComponent implements OnInit {
 
   }
 
-  ActivarSector(id: string) {
+  ActivarCategoria(id: string) {
     this.categoriasService.ActivarCategorias(id).then((data: any) => {
       console.log(data);
       const nombre = data.cont.strNombre;
       console.log(nombre);
       Toast.fire({
         icon: 'success',
-        title: `¡El sector: " ${nombre} " se activo correctamente!`
+        title: `¡La categoría: " ${nombre} " se activo correctamente!`
       });
       this.obtenerCategorias();
     }).catch((err) => {
@@ -80,11 +80,12 @@ export class MenuComponent implements OnInit {
       this.cargando = false;
       this.categorias = categorias.cont;
 
-      for (const sector of this.categorias) {
+      for (const categoria of this.categorias) {
         let element = [
 
-          sector.strNombre.replace(/\:null/gi, ':""'),
-          sector.blnActivo ? 'Si' : 'No',
+          categoria.strNombre.replace(/\:null/gi, ':""'),
+          categoria.strDescripcion.replace(/\:null/gi, ':""'),
+          categoria.blnActivo ? 'Si' : 'No',
 
         ];
 
@@ -114,57 +115,68 @@ export class MenuComponent implements OnInit {
   }
 
 
-  // exportPDF() {
-  //   let header = [
-  //     {
-  //       text: "Nombre",
-  //       alignment: "center",
-  //       style: "tableHeader",
-  //       bold: true,
-  //       fillColor: "#2a3e52",
-  //       color: "#ffffff",
-  //       size: 13,
+  exportPDF() {
+    let header = [
+      {
+        text: "Nombre",
+        alignment: "center",
+        style: "tableHeader",
+        bold: true,
+        fillColor: "#2a3e52",
+        color: "#ffffff",
+        size: 13,
 
-  //     },
-  //     {
-  //       text: "  Activo  ",
-  //       alignment: "center",
-  //       style: "tableHeader",
-  //       bold: true,
-  //       fillColor: "#2a3e52",
-  //       color: "#ffffff",
-  //       size: 13,
-  //     }
+      },
+      {
+        text: "Descripción",
+        alignment: "center",
+        style: "tableHeader",
+        bold: true,
+        fillColor: "#2a3e52",
+        color: "#ffffff",
+        size: 13,
 
-  //   ];
-  //   this._PdfService.generatePdf(
-  //     "Reporte de Sectores",
-  //     header,
-  //     this.arraNewCategorias,
-  //     "center"
+      },
+      {
+        text: "  Activo  ",
+        alignment: "center",
+        style: "tableHeader",
+        bold: true,
+        fillColor: "#2a3e52",
+        color: "#ffffff",
+        size: 13,
+      }
+
+    ];
+    this._PdfService.generatePdf(
+      "Reporte de categorias",
+      header,
+      this.arraNewCategorias,
+      "center"
 
 
-  //   );
-  // }
-  // //exportar en excel
-  // exportAsXLSX() {
-  //   let jsnInfo = {};
-  //   const jsnObject = [];
+    );
+  }
+  //exportar en excel
+  exportAsXLSX() {
+    let jsnInfo = {};
+    const jsnObject = [];
 
-  //   if (this.categorias.length !== 0) {
+    if (this.categorias.length !== 0) {
 
-  //     for (let datos of this.categorias) {
-  //       jsnInfo = {};
-  //       jsnInfo = {
-  //         'Sectores': datos.strNombre,
-  //         'Activo': datos.blnActivo ? 'Si' : 'No'
-  //       };
-  //       if (jsnInfo !== '') {
-  //         jsnObject.push(jsnInfo);
-  //       }
-  //     }
-  //     this.excelService.exportAsExcelFile(jsnObject, `${this.title}`);
-  //   }
-  // }
+      for (let datos of this.categorias) {
+        jsnInfo = {};
+        jsnInfo = {
+          'Nombre': datos.strNombre,
+          'Descripcion': datos.strDescripcion,
+          'Activo': datos.blnActivo ? 'Si' : 'No'
+        };
+        if (jsnInfo !== '') {
+          jsnObject.push(jsnInfo);
+        }
+      }
+      this.excelService.exportAsExcelFile(jsnObject, `${this.title}`);
+    }
+  }
 
 }

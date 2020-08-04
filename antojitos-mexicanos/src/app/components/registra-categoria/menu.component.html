@@ -3,15 +3,18 @@
 
 
 
+
+
+
         <div class="col-md-4">
-            <div class="container">
-                <app-registra-p>
+            <div class="container" *ngIf="registrarCategorias">
+                <app-registra-p [idCategorias]="idCategorias" (terminarActualizacion)="terminarActualizacion($event)">
                 </app-registra-p>
             </div>
-            <!-- <div class="container ">
-                <app-edita>
+            <div class="container" *ngIf="actualizarCategorias">
+                <app-edita [idCategorias]="idCategorias" (terminarActualizacion)="terminarActualizacion($event)">
                 </app-edita>
-            </div> -->
+            </div>
         </div>
 
         <div class=" col-lg-8 col-md-12 ">
@@ -27,15 +30,17 @@
                                     <div>
                                         <form class="navbar-form">
                                             <div class="input-group">
-                                                <input type="search" class="form-control" placeholder="Search" />
+                                                <input type="text" [(ngModel)]="searchText" name="searchText" class="form-control form-control-sm" placeholder=" Buscar...">
                                                 <div class="d-flex">
                                                     <div class="dropdown mr-1">
-                                                        <button type="button" class="btn btn-info" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20">
-                                                                    <i class="fas fa-ellipsis-h"></i>
-                                                                  </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
-                                                            <button class="dropdown-item clear"><i class="far fa-file-pdf"></i> PDF</button>
-                                                            <button class="dropdown-item clear"><i class="far fa-file-excel"></i> Excel</button>
+                                                        <button type="button" class="btn btn-info btn-sm" id="dropdownReports" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                                    class="fa fa-ellipsis-h "></i></button>
+                                                        <div class="dropdown-menu dropdown-menu-right shadow-lg " aria-labelledby="dropdownReports">
+                                                            <div class="dropdown-header text-info ">
+                                                                <span class="text-xs text-uppercase ">EXPORTAR</span>
+                                                            </div>
+                                                            <a type="button" class="dropdown-item drop-options-text pdf " (click)="exportPDF()">PDF</a>
+                                                            <a type="button" class="dropdown-item drop-options-text excel" (click)="exportAsXLSX()">Excel</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -49,19 +54,20 @@
                                                 <tr>
                                                     <th scope="col">Nombre</th>
                                                     <th scope="col">Descripción</th>
+                                                    <th scope="col">Estatus</th>
                                                     <th scope="col">Acciones</th>
 
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let categoria of categorias">
+                                                <tr *ngFor="let categoria of categorias | filter: searchText | paginate:{itemsPerPage: 5, currentPage: pageActual} ">
 
 
 
 
                                                     <td scope="row">{{categoria.strNombre}}</td>
                                                     <td scope="row">{{categoria.strDescripcion}}</td>
-                                                    <td class="text-center">{{categoria.blnActivo == true ? 'Si': 'No'}}</td>
+                                                    <td class="text-center">{{categoria.blnEstatus == true ? 'Si': 'No'}}</td>
                                                     <td scope="row" width="100px">
 
 
@@ -70,16 +76,14 @@
                                                             <div class="dropdown-header text-info ">
                                                                 <span class="text-xs text-uppercase ">Acciones</span>
                                                             </div>
-                                                            <a type="button" class="dropdown-item drop-options-text excel (click)=mostrarActualizar(sector._id)"><i
+                                                            <a type="button" class="dropdown-item drop-options-text excel" (click)="mostrarActualizar(categoria._id)"><i
                                                                             class="fa fa-edit mr-2 "></i>Actualizar</a>
-                                                            <a type="button" class="dropdown-item drop-options-text pdf (click)=ActivarSector(sector._id)
-                                                        *ngIf=!sector.blnActivo"><i
-                                                                            class="fa fa-check mr-2 "></i>Activar</a>
-                                                            <a type="button" class="dropdown-item drop-options-text pdf (click)=eliminarSector(sector._id)
-                                                        *ngIf=sector.blnActivo"><i
-                                                                            class="fa fa-times mr-2 "></i>Desactivar</a>
+                                                            <a type="button" class="dropdown-item drop-options-text " (click)="ActivarCategoria(categoria._id)" *ngIf="!categoria.blnEstatus">
+                                                                <i class="fa fa-check mr-1 "></i>Activar</a>
+                                                            <a type="button" class="dropdown-item drop-options-text " (click)="eliminarCategoria(categoria._id)" *ngIf="categoria.blnEstatus">
+                                                                <i class="fa fa-times mr-2"></i>Desactivar</a>
 
-                                                            <a type="button" class="dropdown-item drop-options-text excel  [routerLink]=['/giros', sector._id]"><i
+                                                            <a type="button" class="dropdown-item drop-options-text excel" [routerLink]="['/platillos', categoria._id]"><i
                                                                             class="fa fa-cog mr-2 "></i>Gestionar giros</a>
                                                         </div>
 
@@ -108,7 +112,9 @@
                                                 </td>
                                             </tr>
                                         </table>
-                                        <!-- <pagination-controls (pageChange)="pageActual = $event"></pagination-controls> -->
+                                        <div class="mt-4 float-right fadeIn ">
+                                            <pagination-controls (pageChange)="pageActual=$event" (pageBoundsCorrection)="pageActual=$event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+                                        </div>
                                     </div>
                                 </fieldset>
                             </form>

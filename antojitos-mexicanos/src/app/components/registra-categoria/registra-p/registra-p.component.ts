@@ -30,14 +30,14 @@ export class RegistraPComponent implements OnInit {
 
   ngOnInit(): void {
   }
-registraCategoria(forma: NgForm){
+registrarCategorias(forma: NgForm){
   
     this.categoriaService.registrarCategorias(this.categorias).then((resp: any) => {
   
       this.terminarActualizacion.emit();
       Toast.fire({
         icon: 'success',
-        title: `¡El sector "${this.categorias.strNombre}" fue agregado correctamente!`
+        title: `¡La categoría "${this.categorias.strNombre}" fue agregado correctamente!`
       });
       forma.controls['strNombre'].reset();
   
