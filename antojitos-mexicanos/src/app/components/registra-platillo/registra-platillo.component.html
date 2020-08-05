@@ -3,105 +3,124 @@
 
 
 
-        <div class="col-md-4 ">
+
+
+
+        <div class="col-md-4">
             <div class="container">
-                <app-inserta-p>
-                </app-inserta-p>
+                <app-inserta-p></app-inserta-p>
             </div>
-            <div class="container">
-                <app-edita-p>
-                </app-edita-p>
-            </div>
+
         </div>
 
-        <div class=" col-lg-8 col-md-12 row">
+        <div class=" col-lg-8 col-md-12 ">
             <div id="wrapper" class="register">
                 <div class="register-s">
-                    <div class="">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="">
-                                    <form class="form-horizontal form-material">
-                                        <fieldset>
-                                            <br>
-                                            <div>
-                                                <form class="navbar-form">
-                                                    <div class="input-group">
-                                                        <input type="search" class="form-control" placeholder="Search" />
-                                                        <div class="d-flex">
-                                                            <div class="dropdown mr-1">
-                                                                <button type="button" class="btn btn-info" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20">
-                                                                    <i class="fas fa-ellipsis-h"></i>
-                                                                  </button>
-                                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
-                                                                    <button class="dropdown-item clear"><i class="far fa-file-pdf"></i> PDF</button>
-                                                                    <button class="dropdown-item clear"><i class="far fa-file-excel"></i> Excel</button>
-                                                                </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <form class="form-horizontal form-material">
+                                <fieldset>
+                                    <br>
+                                    <div>
+                                        <form class="navbar-form">
+                                            <div class="input-group">
+                                                <input type="text" [(ngModel)]="searchText" name="searchText" class="form-control form-control-sm" placeholder=" Buscar...">
+                                                <div class="d-flex">
+                                                    <div class="dropdown mr-1">
+                                                        <button type="button" class="btn btn-info btn-sm" id="dropdownReports" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                                    class="fa fa-ellipsis-h "></i></button>
+                                                        <div class="dropdown-menu dropdown-menu-right shadow-lg " aria-labelledby="dropdownReports">
+                                                            <div class="dropdown-header text-info ">
+                                                                <span class="text-xs text-uppercase ">EXPORTAR</span>
                                                             </div>
+                                                            <a type="button" class="dropdown-item drop-options-text pdf " (click)="exportPDF()">PDF</a>
+                                                            <a type="button" class="dropdown-item drop-options-text excel" (click)="exportAsXLSX()">Excel</a>
                                                         </div>
                                                     </div>
-                                                </form>
+                                                </div>
                                             </div>
+                                        </form>
+                                    </div>
 
-                                            <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                                                <table id="tab1" class="table table-striped ">
-                                                    <tr>
-                                                        <th scope="col">Nombre</th>
-                                                        <th scope="col">Descripción</th>
-                                                        <th scope="col">Ingredientes</th>
-                                                        <th scope="col">Piezas</th>
-                                                        <th scope="col">Precio</th>
-                                                        <th scope="col">Acciones</th>
+                                    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                                        <table id="tab1" class="table table-striped ">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Nombre</th>
+                                                    <th scope="col">Descripción</th>
+                                                    <th scope="col">Ingredientes</th>
+                                                    <th scope="col">Piezas</th>
+                                                    <th scope="col">Precio</th>
+                                                    <th scope="col">Acciones</th>
 
-                                                    </tr>
-                                                    <tr>
-
-
-
-
-                                                        <td scope="row">ggg</td>
-                                                        <td scope="row">ffff</td>
-                                                        <td scope="row">ggg</td>
-                                                        <td scope="row">ffff</td>
-                                                        <td scope="row">ggg</td>
-
-                                                        <td scope="row" width="100px">
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let platillo of platillos | filter: searchText | paginate:{itemsPerPage: 5, currentPage: pageActual} ">
 
 
-                                                            <button type="button" class="btn btn-info btn-sm" id="dropdownReports" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-h "></i></button>
-                                                            <div class="dropdown-menu dropdown-menu-right shadow-lg " aria-labelledby="dropdownReports">
-                                                                <div class="dropdown-header text-info ">
-                                                                    <span class="text-xs text-uppercase ">Acciones</span>
-                                                                </div>
-                                                                <a type="button" class="dropdown-item drop-options-text excel "><i
-                                                                            class="fa fa-edit mr-2 "></i>Actualizar</a>
-                                                                <a type="button" class="dropdown-item drop-options-text pdf"><i
-                                                                            class="fa fa-check mr-2 "></i>Activar</a>
-                                                                <a type="button" class="dropdown-item drop-options-text pdf"><i
-                                                                            class="fa fa-times mr-2 "></i>Desactivar</a>
 
-                                                                <a type="button" class="dropdown-item drop-options-text excel "><i
-                                                                            class="fa fa-cog mr-2 "></i>Gestionar giros</a>
+
+                                                    <td scope="row">{{categoria.strNombre}}</td>
+                                                    <td scope="row">{{categoria.strDescripcion}}</td>
+                                                    <td scope="row">{{categoria.strIngredientes}}</td>
+                                                    <td scope="row">{{categoria.nmbPiezas}}</td>
+                                                    <td scope="row">{{categoria.nmbPrecio}}</td>
+                                                    <td class="text-center">{{categoria.blnEstatus == true ? 'Si': 'No'}}</td>
+                                                    <td scope="row" width="100px">
+
+
+                                                        <button type="button" class="btn btn-info btn-sm" id="dropdownReports" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-h "></i></button>
+                                                        <div class="dropdown-menu dropdown-menu-right shadow-lg " aria-labelledby="dropdownReports">
+                                                            <div class="dropdown-header text-info ">
+                                                                <span class="text-xs text-uppercase ">Acciones</span>
                                                             </div>
+                                                            <a type="button" class="dropdown-item drop-options-text excel" (click)="mostrarActualizar(platillo._id)"><i
+                                                                            class="fa fa-edit mr-2 "></i>Actualizar</a>
+                                                            <a type="button" class="dropdown-item drop-options-text " (click)="ActivarPlatillo(platillo._id)" *ngIf="!platillo.blnEstatus">
+                                                                <i class="fa fa-check mr-1 "></i>Activar</a>
+                                                            <a type="button" class="dropdown-item drop-options-text " (click)="eliminarPlatillo(platillo._id)" *ngIf="platillo.blnEstatus">
+                                                                <i class="fa fa-times mr-2"></i>Desactivar</a>
 
-                                                        </td>
 
+                                                        </div>
 
-                                                        <!-- 
-                                                            <td>{{direccion.strNombre}}</td>
-                                                            <td><button class="btn btn-outline-danger" type="button" (click)="eliminar(direccion)">Especialidad</button>
-                                                            </td>
-                                                            <td><button class="btn btn-outline-warning" type="button" (click)="actualizar(direccion._id)">Editar</button>
-                                                            </td> -->
-                                                    </tr>
-                                                </table>
-                                                <!-- <pagination-controls (pageChange)="pageActual = $event"></pagination-controls> -->
-                                            </div>
-                                        </fieldset>
-                                    </form>
-                                </div>
-                            </div>
+                                                    </td>
+
+                                                </tr>
+                                            </tbody>
+                                            <tr class="bg-white" *ngIf="platillos == '' || platillos === undefined && !cargando">
+                                                <td colspan="6" class="text-center">
+                                                    <div class="alert alert-dismissible alert-light">
+                                                        <h5 style="height: 100%; width: 100%;">
+                                                            <strong><i class="fa fa-frown-o" aria-hidden="true"></i> ¡NO HAY
+                                                            REGISTROS PARA MOSTRAR!</strong>
+                                                        </h5>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <!-- SE MUESTRA CUANDO ESTÁ CARGANDO -->
+                                            <tr *ngIf="cargando">
+                                                <td colspan="14">
+                                                    <div class=" alert-dismissible text-center" style="padding: .75rem 1.25rem;">
+                                                        <h5 style="height: 100%;width: 100%;"><strong><i
+                                                                class="fa fa-spinner fa-pulse"></i> CARGANDO</strong>
+                                                        </h5>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <div class="mt-4 float-right fadeIn ">
+                                            <pagination-controls (pageChange)="pageActual=$event" (pageBoundsCorrection)="pageActual=$event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+
                         </div>
+
                     </div>
                 </div>
             </div>
