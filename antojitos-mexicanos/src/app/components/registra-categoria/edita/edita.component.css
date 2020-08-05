@@ -20,4 +20,5 @@
     width: 130%;
     position: fixed;
     overflow: hidden;
+    margin-left: -30px;
 }

@@ -23,7 +23,7 @@
     <div class="form-group col-md-12">
 
         <div class="">
-            <textarea class="form-control" type="text" rows="5" placeholder="Descripcion" id=" validationServer07" required [ngClass]="{ 'is-invalid': !strDescripcion.valid && strDescripcion.touched}" name="strDescripcion" [(ngModel)]="platillos.strDescripcion" #strDescripcion="ngModel"></textarea>
+            <textarea class="form-control" type="text" rows="5" placeholder="Descripcion" id=" validationServer02" required [ngClass]="{ 'is-invalid': !strDescripcion.valid && strDescripcion.touched}" name="strDescripcion" [(ngModel)]="platillos.strDescripcion" #strDescripcion="ngModel"></textarea>
             <div class="invalid-feedback">
                 Ingrese la descripción
             </div>
@@ -33,7 +33,7 @@
     <div class="form-group col-md-12">
 
         <div class="">
-            <textarea class="form-control" type="text" rows="5" placeholder="Ingredientes" id=" validationServer07" required [ngClass]="{ 'is-invalid': !strIngredientes.valid && strIngredientes.touched}" name="strIngredientes" [(ngModel)]="platillos.strIngredientes"
+            <textarea class="form-control" type="text" rows="5" placeholder="Ingredientes" id=" validationServer03" required [ngClass]="{ 'is-invalid': !strIngredientes.valid && strIngredientes.touched}" name="strIngredientes" [(ngModel)]="platillos.strIngredientes"
                 #strIngredientes="ngModel"></textarea>
             <div class="invalid-feedback">
                 Ingrese los ingredientes
@@ -44,7 +44,7 @@
     <div class="form-group col-md-12">
 
         <div class="">
-            <input class="form-control" type="number" min="0" placeholder="Número de piezas" id=" validationServer07" required [ngClass]="{ 'is-invalid': !nmbPiezas.valid && nmbPiezas.touched}" name="nmbPiezas" [(ngModel)]="platillos.nmbPiezas" #nmbPiezas="ngModel">
+            <input class="form-control" type="number" min="0" placeholder="Número de piezas" id=" validationServer04" required [ngClass]="{ 'is-invalid': !nmbPiezas.valid && nmbPiezas.touched}" name="nmbPiezas" [(ngModel)]="platillos.nmbPiezas" #nmbPiezas="ngModel">
             <div class="invalid-feedback">
                 Ingrese número de piezas
             </div>
@@ -55,7 +55,7 @@
     <div class="form-group col-md-12">
 
         <div class="">
-            <input class="form-control" type="number" min="0" placeholder="Precio" id=" validationServer07" required [ngClass]="{ 'is-invalid': !nmbPrecio.valid && nmbPrecio.touched}" name="nmbPrecio" [(ngModel)]="platillos.nmbPrecio" #nmbPrecio="ngModel">
+            <input class="form-control" type="number" placeholder="Precio" id=" validationServer05" required [ngClass]="{ 'is-invalid': !nmbPrecio.valid && nmbPrecio.touched}" name="nmbPrecio" [(ngModel)]="platillos.nmbPrecio" #nmbPrecio="ngModel">
             <div class="invalid-feedback">
                 Ingrese precio
             </div>
