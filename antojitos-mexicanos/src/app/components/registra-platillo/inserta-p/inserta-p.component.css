@@ -1,15 +1,7 @@
-.register {
-    height: 30%;
-    width: 30%;
-    /* padding: 10%; */
-    position: fixed;
-    margin: 0;
-}
-
-.register-p {
+/* .register-p {
     width: 80%;
     margin: 24%;
-}
+} */
 
 .todo {
     background-size: cover;
@@ -19,4 +11,5 @@
     height: 130%;
     width: 130%;
     position: fixed;
+    box-shadow: aqua;
 }
